@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <%- include('./partials/Head') %>
-  <title>Home</title>
+  <title>Sign In</title>
   <style>
     .signin-form {
       max-width: 400px;
@@ -19,14 +19,14 @@
 <div class="container">
   <div class="signin-form">
     <h2 class="text-center">Sign In</h2>
-    <form method="post" action="./user/sign-in">
+    <form method="post" action="/user/sign-in">
       <div class="mb-3 ">
         <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        <input type="email"  name="email" class="form-control" id="email" placeholder="Enter your email">
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter your password">
+        <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
       </div>
       <div class="d-flex justify-content-between align-items-center">
 
@@ -37,7 +37,7 @@
       </div>
     </form>
     <div class="text-center mt-3">
-      <p>Don't have an account? <a href="#">Sign up here</a></p>
+      <p>Don't have an account? <a href="./SignUp.ejs">Sign up here</a></p>
     </div>
   </div>
 </div>
