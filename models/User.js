@@ -26,12 +26,11 @@ const userSchema = Schema({
   },
   salt:{
     type:String,
-    required:true
+    
   }
 
 }, {timestamps:true});
 
-const User = model("User", userSchema);
 
 userSchema.pre("save", function(next){
   const user = this;
@@ -43,8 +42,13 @@ userSchema.pre("save", function(next){
 
   this.salt = salt;
   this.password = hashedPassword;
-  next(); 
+  next();
 })
 
 
+
+
+
+const User = model("User", userSchema);
+module.exports = User;
 
