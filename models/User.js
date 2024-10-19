@@ -2,7 +2,7 @@ const {Schema, model} = require('mongoose');
 const {createHmac, randomBytes} = require("crypto");
 
 const userSchema = Schema({
-  fullname: {
+  fullName: {
     type:String,
     required: true,
   },
@@ -26,7 +26,7 @@ const userSchema = Schema({
   },
   salt:{
     type:String,
-    
+
   }
 
 }, {timestamps:true});
@@ -45,6 +45,17 @@ userSchema.pre("save", function(next){
   next();
 })
 
+userSchema.static('matchPassword', async function(email, password){
+  const user = await this.findOne({email});
+  if(!user) throw new Error("User doesn't exist");
+
+  const salt = user.salt;
+  const hashedPassword = createHmac("sha256", salt).update(password).digest("hex");
+  if(user.password!==hashedPassword){
+    throw new Error("Wrong password");
+  }
+  return {...user, password:undefined, salt:undefined}
+})
 
 
 
