@@ -1,15 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { redirect } = require('react-router-dom');
 
 router.get('/sign-in', (req, res)=>{
-  res.render('./SignIn');
+  res.render('SignIn', {error: null});
 })
 
 router.post('/sign-in', async (req, res)=>{
   const {email, password} = req.body;
-  const user = await User.matchPassword(email, password);
-  if(user)res.redirect('/');
+  try{
+  const token = await User.matchPasswordAndGenerateToken(email, password);
+  // console.log(token);
+  res.cookie("token", token).redirect('/');
+  }
+  catch(error){
+    res.render('SignIn', {
+      error: 'Wrong email or password!'
+    })
+  }
 
 })
 
