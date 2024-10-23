@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
   }
 })
 
-const uploads = multer.uploads({storage: storage});
+const uploads = multer({storage: storage});
 
 
 router.get('/add-blog', (req, res)=>{
@@ -32,7 +32,8 @@ router.post('/add-blog', uploads.single('coverImage'), async(req, res)=>{
     createdBy : req.user._id,
     coverImage: `uploads/${coverImage}`
   })
-  res.redirect('/');
+  console.log(blog); 
+  return res.redirect('/');
 
 })
 
