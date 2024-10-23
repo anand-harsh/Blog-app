@@ -23,7 +23,9 @@ app.set('views',path.resolve('./views') );
 app.use('/user', userRoute);
 
 app.get('/', (req, res)=>{
-  res.render('Home');
+  res.render('Home',{
+    user: req.user
+  });
 })
 
 app.listen(PORT, ()=>{console.log(`Server started on the port:${PORT}`)});
