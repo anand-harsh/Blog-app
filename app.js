@@ -27,7 +27,7 @@ app.use('/user', userRoute);
 app.use('/blog', blogRouter);
 
 app.get('/', async (req, res)=>{
-  const allBlogs = await Blog.find({});
+  const allBlogs = await Blog.find({}).populate('createdBy');
   res.render('Home',{
     user: req.user,
     blogs: allBlogs
