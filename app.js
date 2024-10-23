@@ -6,12 +6,15 @@ const app = express();
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
+const blogRouter = require('./routes/blog');
 const userRoute = require('./routes/user');
 const { checkForAuthenticationCookie } = require('./middleware/authentication');
-
+const Blog = require('./models/Blog')
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie('token'));
+app.use(express.static(path.resolve('./public')));
+
 
 mongoose.connect(process.env.MONGO_URI).then(()=>console.log("Mongo DB connected")).catch(error=>console.log(error));
 
@@ -21,10 +24,13 @@ app.set('view engine', 'ejs');
 app.set('views',path.resolve('./views') );
 
 app.use('/user', userRoute);
+app.use('/blog', blogRouter);
 
-app.get('/', (req, res)=>{
+app.get('/', async (req, res)=>{
+  const allBlogs = await Blog.find({});
   res.render('Home',{
-    user: req.user
+    user: req.user,
+    blogs: allBlogs
   });
 })
 
