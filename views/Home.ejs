@@ -1,11 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Include Head partial, which might contain meta tags, stylesheets, and title -->
   <%- include('./partials/Head') %>
   <title>Home</title>
+
+  <!-- Custom CSS for consistent card and image size -->
+  <style>
+    .card-img-top {
+      height: 250px; /* Set a fixed height for the image */
+      object-fit: cover; /* Ensure the image scales properly without distortion */
+    }
+    .card {
+      height: 100%; /* Make card take up full height */
+    }
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Align content properly */
+    }
+    .btn {
+      margin-top: auto; /* Keep the button at the bottom */
+    }
+  </style>
 </head>
 <body>
-<%- include('./partials/Nav') %>
-<%- include('./partials/Scripts') %>
+
+  <!-- Include Navigation bar partial -->
+  <%- include('./partials/Nav') %>
+
+  <!-- Main content section -->
+  <div class="container mt-5">
+    <h1 class="text-center">Welcome to the Blog!</h1>
+    <p class="lead text-center">Check out the latest posts from our blog.</p>
+
+    <!-- Blog Post List -->
+    <div class="row mt-4">
+      <% blogs.forEach(blog => { %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100"> <!-- Make card height consistent -->
+          <img src="<%= blog.coverImage %>" class="card-img-top" alt="<%= blog.title %> Cover Image">
+          <div class="card-body">
+            <h5 class="card-title"><%= blog.title %></h5>
+            <p class="card-text">
+              <%= blog.body.substring(0, 100) %>... <!-- Show excerpt of the blog post -->
+            </p>
+          </div>
+          <div class="card-footer text-center">
+            <a href="/blog/<%= blog._id %>" class="btn btn-primary">Read More</a>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- Include Scripts partial, which might contain JavaScript libraries and custom scripts -->
+  <%- include('./partials/Scripts') %>
+
 </body>
 </html>
