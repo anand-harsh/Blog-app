@@ -42,6 +42,8 @@
           <img src="<%= blog.coverImage %>" class="card-img-top" alt="<%= blog.title %> Cover Image">
           <div class="card-body">
             <h5 class="card-title"><%= blog.title %></h5>
+            <p class="text-muted">Posted by <%=blog.createdBy.fullName  %></p>
+
             <p class="card-text">
               <%= blog.body.substring(0, 100) %>... <!-- Show excerpt of the blog post -->
             </p>
