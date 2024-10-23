@@ -18,7 +18,7 @@ app.use(express.static(path.resolve('./public')));
 
 mongoose.connect(process.env.MONGO_URI).then(()=>console.log("Mongo DB connected")).catch(error=>console.log(error));
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.set('view engine', 'ejs');
 app.set('views',path.resolve('./views') );
@@ -36,4 +36,4 @@ app.get('/', async (req, res)=>{
 
 app.listen(PORT, ()=>{console.log(`Server started on the port:${PORT}`)});
 
-module.exports = app.js
+module.exports = app
