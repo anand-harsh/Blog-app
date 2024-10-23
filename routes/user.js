@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { redirect } = require('react-router-dom');
+const { generateToken } = require('../services/authentication');
 
 router.get('/sign-in', (req, res)=>{
   res.render('SignIn', {error: null});
@@ -28,14 +29,19 @@ router.get('/sign-up', (req, res)=>{
 
 router.post('/sign-up' , async (req, res)=>{
   const {fullName, password, email, profileImage} = req.body;
-  await User.create({
+  const newUser = await User.create({
     fullName,
     password,
     email,
     profileImage
   });
-  res.redirect('/');
+  const token = generateToken(newUser);
+  res.cookie('token', token).redirect('/');
 
+})
+
+router.get('/logout', (req, res)=>{
+  res.clearCookie('token').redirect('/');
 })
 
 module.exports = router;
