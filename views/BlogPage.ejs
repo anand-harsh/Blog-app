@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Include Head partial, which might contain meta tags, stylesheets, and title -->
+  <%- include('./partials/Head') %>
+  <title><%= blog.title %> | Blog Details</title>
+
+  <!-- Custom CSS for styling (if needed) -->
+  <style>
+    .blog-cover-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+    .blog-content {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Include Navigation bar partial -->
+  <%- include('./partials/Nav') %>
+
+  <!-- Main content section -->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1><%= blog.title %></h1>
+        <p class="text-muted">Posted by <%= blog.createdBy.fullName %> on <%= blog.createdAt.toLocaleDateString() %></p>
+      </div>
+    </div>
+
+    <!-- Blog Cover Image -->
+    <div class="row">
+      <div class="col-md-12">
+        <img src="<%= blog.coverImage %>" alt="<%= blog.title %>" class="blog-cover-image img-fluid rounded">
+      </div>
+    </div>
+
+    <!-- Blog Content -->
+    <div class="row blog-content">
+      <div class="col-md-12">
+        <p><%= blog.body %></p>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <h3>Comments</h3>
+        <% if (comments.length > 0) { %>
+          <ul class="list-group">
+            <% comments.forEach(comment => { %>
+              <li class="list-group-item">
+                <strong><%= comment.createdBy.fullName %>:</strong> <%= comment.content %>
+              </li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p>No comments yet.</p>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Add a Comment -->
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <% if (user) { %>
+          <form action="/blog/comment/<%= blog._id %>" method="POST">
+            <div class="mb-3">
+              <label for="comment" class="form-label">Leave a comment</label>
+              <textarea class="form-control" id="comment" name="content" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+          </form>
+        <% } else { %>
+          <p><a href="/user/sign-in">Sign in</a> to leave a comment.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Include Scripts partial -->
+  <%- include('./partials/Scripts') %>
+
+</body>
+</html>
