@@ -10,6 +10,8 @@ const blogRouter = require('./routes/blog');
 const userRoute = require('./routes/user');
 const { checkForAuthenticationCookie } = require('./middleware/authentication');
 const Blog = require('./models/Blog')
+var cors=require('cors')
+app.use(cors())
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie('token'));
