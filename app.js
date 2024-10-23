@@ -34,6 +34,6 @@ app.get('/', async (req, res)=>{
   });
 })
 
-app.listen(PORT, ()=>{console.log(`Server started on the port:${PORT}`)});
+// app.listen(PORT, ()=>{console.log(`Server started on the port:${PORT}`)});
 
 module.exports = app
